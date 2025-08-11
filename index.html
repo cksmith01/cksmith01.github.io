@@ -1,27 +1,39 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chad K Smith</title>
-
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">    
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
-        body {
+        /* base styles */
+        * {
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        a {
             color: white;
-            background-image: url('bg.jpg');
-            background-repeat: repeat-y, repeat-x;
-            background-position: center, top left;
-            background-size: cover, auto;
+        }
+
+        a:visited {
+            color: white;
+        }
+
+        a:hover {
+            color: #6F86FF;
+        }
+
+        body {
+            /* background-color: rgb(65, 71, 97); */
+            background-color: slategrey;
+            font-family: sans-serif;
+            font-size: 16px;
+            color: white;
         }
 
         th,
@@ -29,9 +41,16 @@
             vertical-align: top;
             padding: 10px;
         }
+
+        #content {
+            max-width: 800px;
+            padding: 10px;
+        }
+
         #content h1 {
             font-size: 30px;
             font-weight: bold;
+            padding: 20px;
         }
 
         #content h2 {
@@ -54,116 +73,122 @@
             margin: 0 0 10px 0;
         }
 
-        #wrapper {
-            background-color: slategrey;
-        }
-
-        #education td:nth-child(2) { 
-            font-weight: bold;
-        }
-
-        #left {
-            height: 100%;
-            width: 20%;
-            color: white;
-            float: left;
-            padding-top: 10px;
+        /* off-screen-menu */
+        .off-screen-menu {
+            background-color: rgb(34, 37, 49);
+            height: 100vh;
+            width: 100%;
+            max-width: 450px;
+            position: fixed;
+            top: 0;
+            right: -450px;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            text-align: left;
+            font-size: 2rem;
+            transition: .3s ease;
             padding-left: 20px;
-            background-color: slategrey;
         }
 
-        #right {
-            height: 100%;
-            width: 80%;
-            color: white;
-            float: left;
-            padding-top: 20px;
-            padding-left: 20px;
-            background-color: slategrey;
-            
+        .off-screen-menu.active {
+            right: 0;
         }
 
-        #content {
-            margin-right: 20px;
-            padding: 20px;
-            max-width: 900px;
-        }
-        #menu {
-            width: 80%;
+        .off-screen-menu i {
+            padding: 16px;
         }
 
-        .headshot {
-            border: 0px solid white;
-            border-radius: 10px;
+        /* nav */
+        nav {
+            margin: 0 !important;
+            width: 100% !important;
+            padding: 1rem;
+            display: flex;
+            background-color: rgb(34, 37, 49);
         }
 
-        img {
-            border-radius: 10px;
-            height: 80%;
-            width: 80%;
-            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
-            min-width: 200px;
-            min-height: 200px;            
+        /* ham menu */
+        .ham-menu {
+            height: 50px;
+            width: 40px;
+            margin-left: auto;
+            position: relative;
+            z-index: 10;
         }
 
-        .name {
+        .ham-menu:hover {
+            cursor: pointer;
+        }
+
+        .ham-menu span {
+            height: 5px;
+            width: 100%;
+            background-color: #6F86FF;
+            border-radius: 25px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: .3s ease;
+        }
+
+        .ham-menu span:nth-child(1) {
+            top: 25%;
+        }
+
+        .ham-menu span:nth-child(3) {
+            top: 75%;
+        }
+
+        .ham-menu.active span {
+            background-color: white;
+        }
+
+        .ham-menu.active span:nth-child(1) {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .ham-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .ham-menu.active span:nth-child(3) {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .menu_title {
             font-family: "Bebas Neue", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            font-size: 200%;
-            padding: .25em .5em .25em .25em;
+            color: white;
+            font-size: 40px;
         }
 
-        .clearfix {
-            clear: both;
-            display: table;
+        .headshot > img {
+            width: 100%;
+            height: 100%;
+            max-width: 250px;
+            max-height: 250px;
+            margin: 20px;
+            border: 1px white solid;
+            border-radius: 10px;
         }
 
         .title {
             font-weight: bold;
         }
-        .org, .duration {
+
+        .org,
+        .duration {
             text-indent: 5px;
             font-style: italic;
             font-size: 90%;
-            margin-top: 8px;
+            margin-top: 15px;
         }
 
-        ul.contact li i {
-            padding: .25em .5em .25em .25em;
-        }
-
-        ul.contact {
-            margin-top: 1em;
-            padding-bottom: 1.5em;
-        }
-        ul.contact li {
-            text-decoration: none;
-            margin: 1em 0 0 0;
-            padding: .1em 1em .1em 2.25em;
-            position: relative;
-        } 
-
-
-        ul.menu li i {
-            padding: .25em .5em .25em .25em;
-        }
-
-        ul.menu {
-            margin-top: 1em;
-            padding-bottom: 1.5em;
-        }
-        ul.menu li {
-            text-decoration: none;
-            margin: 1em 0 0 0;
-            padding: .1em 1em .1em 2.25em;
-            position: relative;
-        }
-
-        ul.skills_soft li {
-            padding: .5em 2em .5em 2.25em;
-        }
-
+        /* slider bar */
         .bar,
         .bar:hover {
             color: #000 !important;
@@ -171,6 +196,7 @@
             border-radius: 16px;
             font-size: 12px !important;
         }
+
         .barfill,
         .barfill:after,
         .barfill:before {
@@ -183,329 +209,420 @@
             color: #fff !important;
             background-color: lightblue !important;
         }
+
         .bartitle {
             padding: 1em 0 .5em 0;
         }
 
+        ul.skills_soft li {
+            padding: .5em 2em .5em 2.25em;
+        }
+
+        ul.contact li i {
+            padding: .25em .5em .25em .25em;
+        }
+
+        ul.contact {
+            margin-top: 1em;
+            padding-bottom: 1.5em;
+        }
+
+        ul.contact li {
+            text-decoration: none;
+            margin: 1em 0 0 0;
+            padding: .1em 1em .1em 2.25em;
+            /* position: relative; */
+        }
+
+        ul#top_nav {
+            margin-top: 16px;
+        }
+
+        ul#top_nav li {
+            display: inline;
+            padding: 5px 10px 5px 20px;
+            font-size: 110%;
+        }
+
+        .ref_contact {
+            padding: 16px 0 0 10px;
+        }
+        .ref_name {
+            font-weight: bold;
+            font-size: 110%;
+        }
+        .ref_desc {
+            padding: 20px;
+        }
+
+        @media only screen and (max-width: 1250px) {
+            #top_nav {
+                display: none;
+            }
+        }
+        @media only screen and (min-width: 1250px) {
+            .ham-menu {
+                display: none;
+            }
+        }
     </style>
+    <title>Chad K Smith</title>
 </head>
 
 <body>
-    <div id="wrapper">
-        <section id="left">
+    <div class="off-screen-menu">
+        <ul>
+            <li><a href="javascript:swap('intro')"><i class="fas fa-bell"></i> Introduction</a></li>
+            <li><a href="javascript:swap('contact')"><i class="fas fa-phone"></i> Contact</a></li>
+            <li><a href="javascript:swap('skills_soft')"> <i class="fa fa-users"></i> Soft Skills</a></li>
+            <li><a href="javascript:swap('skills_tech')"><i class="fa fa-cog"></i> Technical Skills</a></li>
+            <li><a href="javascript:swap('experience')"><i class="fa fa-history"></i> Experience</a></li>
+            <li><a href="javascript:swap('education')"><i class="fa fa-graduation-cap"></i> Education</a></li>
+            <li><a href="javascript:swap('references')"><i class="fa fa-phone-square"></i> References</a></li>
+        </ul>
+    </div>
 
-            <div class="headshot">
-                <img src="head_shot.jpg" />
-            </div>
-
-            <div class="name">
-                Chad K Smith
-            </div>
-            
-            <ul class="contact">
-                <li><i class="fas fa-home"></i> 860 Shepard Creek Pkwy<br/>Farmington, UT 84025</li>
-                <li><i class="fas fa-envelope"></i> <a href="mailto:chadksmith1@gmail.com">Email</a></li>
-                <li><i class="fas fa-phone"></i> 801 230 1081</li>
-                <li><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/chad-smith-64554730/" target="_blank">LinkedIn</a></li>
+    <nav>
+        <span class="menu_title">Chad K Smith</span>
+        <span>
+            <ul id="top_nav">
+                <li><a href="javascript:swap('intro', false)"><i class="fas fa-bell"></i> Introduction</a></li>
+                <li><a href="javascript:swap('contact', false)"><i class="fas fa-phone"></i> Contact</a></li>
+                <li><a href="javascript:swap('skills_soft', false)"> <i class="fa fa-users"></i> Soft Skills</a></li>
+                <li><a href="javascript:swap('skills_tech', false)"><i class="fa fa-cog"></i> Technical Skills</a></li>
+                <li><a href="javascript:swap('experience', false)"><i class="fa fa-history"></i> Experience</a></li>
+                <li><a href="javascript:swap('education', false)"><i class="fa fa-graduation-cap"></i> Education</a></li>
+                <li><a href="javascript:swap('references', false)"><i class="fa fa-phone-square"></i> References</a></li>
             </ul>
-            <div class="underline"></div>
-            <div id="menu">
-                <ul class="menu">
-                    <li><i class="fas fa-bell"></i> <a href="javascript:showContent('intro')">Introduction</a></li>
-                    <li><i class="fa fa-users"></i> <a href="javascript:showContent('skills_soft')">Soft Skills</a></li>
-                    <li><i class="fa fa-cog"></i> <a href="javascript:showContent('skills_tech')">Technical Skills</a></li>
-                    <li><i class="fa fa-history"></i> <a href="javascript:showContent('experience')"">Experience</a></li>
-                    <li><i class="fa fa-graduation-cap"></i> <a href=" javascript:showContent('education')"">Education</a></li>
-                    <li><i class="fa fa-phone-square"></i> <a href=" javascript:showContent('references')"">References</a></li>
-                </ul>
-            </div>
+        </span>
+        <div class="ham-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
 
-        </section>
-        <section id="right">
-            <div id="content">
-                Hello and welcome to my online resume.  The introduction will load shortly...
-            </div>
-        </section>
+    <div id="content">
+        Hello and welcome to my online resume. The introduction will load shortly...
+    </div>
 
-        <div id="intro"  style="display:none" class="content">
-            <h1><i class="fas fa-bell"></i> Introduction</h1>
-            <div class="underline"></div>
-            I have a 20+ year passion for building solid, responsive, and scalable software systems that make people's work
-            lives easier. For the past few years I’ve held a managerial role, but I’m excited to get back to what I love, building and
-            supporting great software solutions. I also love learning new technologies and determining how best to implement them in my
-            organization and in my own best practices.
+    <div id="intro" style="display:none" class="content">
+        <div class="headshot">
+            <img src="head_shot.jpg" />
+        </div>
+        <h1><i class="fas fa-bell"></i> Introduction</h1>
+        <div class="underline"></div>
+        I have a 20+ year passion for building solid, responsive, and scalable software systems that make people's work
+        lives easier. For the past few years I’ve held a managerial role, but I’m excited to get back to what I love,
+        building and
+        supporting great software solutions. I also love learning new technologies and determining how best to implement
+        them in my
+        organization and in my own best practices.
 
-            <br/><br/>
-            <h2>Passions Outside of Work</h2>
-            <p>
-                I love traveling abroad, camping, hiking, kayaking, biking, boating, and riding UTVs. I’m completely
-                fascinated with where AI is going and learning all the technical aspects of it. I’m also interested in
-                block chain and graphQL.
-            </p>
+        <br /><br />
+        <h2>Passions Outside of Work</h2>
+        <p>
+            I love traveling abroad, camping, hiking, kayaking, biking, boating, and riding UTVs. I’m completely
+            fascinated with where AI is going and learning all the technical aspects of it. I’m also interested in
+            block chain and graphQL.
+        </p>
+    </div>
+
+    <div id="skills_tech" style="display:none" class="content">
+        <h1><i class="fa fa-cog"></i> Technical Skills</h1>
+        <div class="underline"></div>
+
+        <div style="text-align: right;">A guestimate of my proficiency levels...</div>
+
+        <div class="bartitle">Java / OOP / OOD / J2EE / JSP / Servlets / JSTL</div>
+        <div class="bar">
+            <div class="barfill" style="width: 85%;">85%</div>
         </div>
 
-        <div id="skills_tech"  style="display:none" class="content">
-            <h1><i class="fa fa-cog"></i> Technical Skills</h1>
-            <div class="underline"></div>
-
-            <div style="text-align: right;">A guestimate of my proficiency levels...</div>
-
-            <div class="bartitle">Java / OOP / OOD / J2EE / JSP / Servlets / JSTL</div>
-            <div class="bar">
-                <div class="barfill" style="width: 85%;">85%</div>
-            </div> 
-
-            <div class="bartitle">Spring / Spring Boot / MVC / REST </div>
-            <div class="bar">
-                <div class="barfill" style="width: 80%;">80%</div>
-            </div> 
-
-            <div class="bartitle">HTML5 / CSS / JavaScript / jQuery </div>
-            <div class="bar">
-                <div class="barfill" style="width: 80%;">80%</div>
-            </div> 
-
-            <div class="bartitle">SQL Server / Oracle / MySQL / Informix / PostgreSQL / SQLite </div>
-            <div class="bar">
-                <div class="barfill" style="width: 70%;">70%</div>
-            </div> 
-
-            <div class="bartitle">MyBatis / Hibernate </div>
-            <div class="bar">
-                <div class="barfill" style="width: 60%;">60%</div>
-            </div> 
-
-            <div class="bartitle">Scrum / Agile / Kanban / Jira / Confluence / ServiceManagement </div>
-            <div class="bar">
-                <div class="barfill" style="width: 50%;">50%</div>
-            </div> 
-
-            <div class="bartitle">Maven / GIT / Nexus / Jenkins / Artifactory</div>
-            <div class="bar">
-                <div class="barfill" style="width: 50%;">50%</div>
-            </div> 
-
-            <div class="bartitle">React JS</div>
-            <div class="bar">
-                <div class="barfill" style="width: 50%;">50%</div>
-            </div> 
-
-            <div class="bartitle">Python / Flask</div>
-            <div class="bar">
-                <div class="barfill" style="width: 40%;">40%</div>
-            </div> 
-
-            <div class="bartitle">Nginx</div>
-            <div class="bar">
-                <div class="barfill" style="width: 20%;">20%</div>
-            </div> 
-
-            <div class="bartitle">AI / Ollama</div>
-            <div class="bar">
-                <div class="barfill" style="width: 20%;">20%</div>
-            </div> 
+        <div class="bartitle">Spring / Spring Boot / MVC / REST </div>
+        <div class="bar">
+            <div class="barfill" style="width: 80%;">80%</div>
         </div>
 
-        <div id="skills_soft"  style="display:none" class="content">
-            <h1><i class="fa fa-users"></i> Soft Skills</h1>
-            <div class="underline"></div>
-            <ul class="skills_soft">
-                <li>Technical Leadership</li>
-                <li>Mentoring</li>
-                <li>Communication (Devs & C-level)</li>
-                <li>Delegation</li>
-                <li>Patience</li>
-                <li>Problem solving</li>
-                <li>Accountability</li>
-                <li>Creativity</li>
-            </ul>
+        <div class="bartitle">HTML5 / CSS / JavaScript / jQuery </div>
+        <div class="bar">
+            <div class="barfill" style="width: 80%;">80%</div>
         </div>
 
-        <div id="experience"  style="display:none" class="content">
-            <h1> <i class="fa fa-history"></i> Experience</h1>
-            <div class="underline"></div>
-            <table>
-                <tr>
-                    <td>
-                        <div class="title">Deputy Director, IT Development</div>
-                        <div class="org">Utah Legislature</div>
-                        <div class="duration">12/2022 – 07/2025</div>
-                    </td>
-                    <td>
-                        Managed 16 person team of software engineers, project managers and quality assurance testers. 
-                        Standardized the tech stack(Spring, React, MyBatis). Successfully implemented Scrum and agile 
-                        methodologies. Standardized the development environments including implementing Docker. Began 
-                        implementing an open source AI solution (Ollama + OpenWebUI). 
-                        <div class="technologies">Technologies: Spring | React | SQLServer | Ollama | Docker</div> 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="title">Sr. Software Engineer</div>
-                        <div class="org">Utah Legislature</div>
-                        <div class="duration">08/2019 – 12/2022</div>
-                    </td>
+        <div class="bartitle">SQL Server / Oracle / MySQL / Informix / PostgreSQL / SQLite </div>
+        <div class="bar">
+            <div class="barfill" style="width: 70%;">70%</div>
+        </div>
+
+        <div class="bartitle">MyBatis / Hibernate </div>
+        <div class="bar">
+            <div class="barfill" style="width: 60%;">60%</div>
+        </div>
+
+        <div class="bartitle">Scrum / Agile / Kanban / Jira / Confluence / ServiceManagement </div>
+        <div class="bar">
+            <div class="barfill" style="width: 50%;">50%</div>
+        </div>
+
+        <div class="bartitle">Maven / GIT / Nexus / Jenkins / Artifactory</div>
+        <div class="bar">
+            <div class="barfill" style="width: 50%;">50%</div>
+        </div>
+
+        <div class="bartitle">React JS</div>
+        <div class="bar">
+            <div class="barfill" style="width: 50%;">50%</div>
+        </div>
+
+        <div class="bartitle">Python / Flask</div>
+        <div class="bar">
+            <div class="barfill" style="width: 40%;">40%</div>
+        </div>
+
+        <div class="bartitle">Nginx</div>
+        <div class="bar">
+            <div class="barfill" style="width: 20%;">20%</div>
+        </div>
+
+        <div class="bartitle">AI / Ollama</div>
+        <div class="bar">
+            <div class="barfill" style="width: 20%;">20%</div>
+        </div>
+    </div>
+
+    <div id="skills_soft" style="display:none" class="content">
+        <h1><i class="fa fa-users"></i> Soft Skills</h1>
+        <div class="underline"></div>
+        <ul class="skills_soft">
+            <li>Technical Leadership</li>
+            <li>Mentoring</li>
+            <li>Communication (Devs & C-level)</li>
+            <li>Delegation</li>
+            <li>Patience</li>
+            <li>Problem solving</li>
+            <li>Accountability</li>
+            <li>Creativity</li>
+        </ul>
+    </div>
+
+    <div id="experience" style="display:none" class="content">
+        <h1> <i class="fa fa-history"></i> Experience</h1>
+        <div class="underline"></div>
+        <table>
+            <tr>
                 <td>
-                        Worked on numerous projects including a time entry system, a request for appropriations, 
-                        website redesign, an audit job tracking system, a website publishing tool. Mentored developers 
-                        on Spring, MyBatis and React. 
-                        <div class="technologies">Technologies: Java | Spring | React | SQLServer | MyBatis | Python</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="title">IT Anlayst III</div>
-                        <div class="org">State of Utah </div>
-                        <div class="duration">07/2008 – 08/2019</div>
-                    </td>
-                    <td>
-                        Design and develop complex web-based software applications based on customers needs working 
-                        closely with subject matter experts, UI/UX designers, and project managers.  Other responsibilities 
-                        include project estimation, mentoring junior developers, troubleshooting, on-call support, as well as, 
-                        researching and implementing new technologies and architectures.  
-                        <div class="technologies">Technologies: Java | Spring | Thymleaf | SQLServer | Hibernate | MyBatis | Struts | jQuery | Jenkins | Artifactory</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="title">Consultant / Sr. Software Engineer</div>
-                        <div class="org">iCentris Inc </div>
-                        <div class="duration">2000 – 2008</div>
-                    </td>
-                    <td>
-                        Led a team of 6 developers through the entire software development lifecycle of a large medical system. 
-                        In this multi-year project with significant hurdles, we were able to deliver a solid product through a 
-                        tumultuous delivery cycle. Also, led a team of 2 on-shore business analysts and 8 off-shore developers
-                        (India) porting a very large application written with stored procedures to a Java web-based application.
-                        Determined strategic direction for future government contracts and provided technical sales support as 
-                        well. 
-                        <div class="technologies">Technologies: Java | Spring | Hibernate | Informix | Oracle</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="title">Developer / Mentor</div>
-                        <div class="org">CR England </div>
-                        <div class="duration">1999 – 2000</div>
-                    </td>
-                    <td>
-                        Worked on various internal web-based java projects including a driver log entry system and their 
-                        public-facing website.  Advised senior management on web-based technologies and mentored RPG/AS400
-                        programmers on Java/Web development. 
-                        <div class="technologies">Technologies: JSP/Servlets | AS400 | MS | MS OLAP</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><div class="title">Web Developer / Trainer</div>
-                        <div class="org">Questar InfoComm </div>
-                        <div class="duration">1996 – 1999</div>    
-                    </td>
-                    <td>
-                        Worked on several internal web projects the most notable was porting a client-server based human 
-                        resource management system to the web.  In that project I handled all the UI/UX development.  
-                        I also provided sales support, as well as helping customers implement the product. 
-                        <div class="technologies">Technologies: Visual Basic | Java | HTML | JavaScript</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                    <div class="title">Deputy Director, IT Development</div>
+                    <div class="org">Utah Legislature</div>
+                    <div class="duration">12/2022 – 07/2025</div>
+                </td>
+                <td>
+                    Managed 16 person team of software engineers, project managers and quality assurance testers.
+                    Standardized the tech stack(Spring, React, MyBatis). Successfully implemented Scrum and agile
+                    methodologies. Standardized the development environments including implementing Docker. Began
+                    implementing an open source AI solution (Ollama + OpenWebUI).
+                    <div class="technologies">Technologies: Spring | React | SQLServer | Ollama | Docker</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="title">Sr. Software Engineer</div>
+                    <div class="org">Utah Legislature</div>
+                    <div class="duration">08/2019 – 12/2022</div>
+                </td>
+                <td>
+                    Worked on numerous projects including a time entry system, a request for appropriations,
+                    website redesign, an audit job tracking system, a website publishing tool. Mentored developers
+                    on Spring, MyBatis and React.
+                    <div class="technologies">Technologies: Java | Spring | React | SQLServer | MyBatis | Python</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="title">IT Anlayst III</div>
+                    <div class="org">State of Utah </div>
+                    <div class="duration">07/2008 – 08/2019</div>
+                </td>
+                <td>
+                    Design and develop complex web-based software applications based on customers needs working
+                    closely with subject matter experts, UI/UX designers, and project managers. Other responsibilities
+                    include project estimation, mentoring junior developers, troubleshooting, on-call support, as well
+                    as,
+                    researching and implementing new technologies and architectures.
+                    <div class="technologies">Technologies: Java | Spring | Thymleaf | SQLServer | Hibernate | MyBatis |
+                        Struts | jQuery | Jenkins | Artifactory</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="title">Consultant / Sr. Software Engineer</div>
+                    <div class="org">iCentris Inc </div>
+                    <div class="duration">2000 – 2008</div>
+                </td>
+                <td>
+                    Led a team of 6 developers through the entire software development lifecycle of a large medical
+                    system.
+                    In this multi-year project with significant hurdles, we were able to deliver a solid product through
+                    a
+                    tumultuous delivery cycle. Also, led a team of 2 on-shore business analysts and 8 off-shore
+                    developers
+                    (India) porting a very large application written with stored procedures to a Java web-based
+                    application.
+                    Determined strategic direction for future government contracts and provided technical sales support
+                    as
+                    well.
+                    <div class="technologies">Technologies: Java | Spring | Hibernate | Informix | Oracle</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="title">Developer / Mentor</div>
+                    <div class="org">CR England </div>
+                    <div class="duration">1999 – 2000</div>
+                </td>
+                <td>
+                    Worked on various internal web-based java projects including a driver log entry system and their
+                    public-facing website. Advised senior management on web-based technologies and mentored RPG/AS400
+                    programmers on Java/Web development.
+                    <div class="technologies">Technologies: JSP/Servlets | AS400 | MS | MS OLAP</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="title">Web Developer / Trainer</div>
+                    <div class="org">Questar InfoComm </div>
+                    <div class="duration">1996 – 1999</div>
+                </td>
+                <td>
+                    Worked on several internal web projects the most notable was porting a client-server based human
+                    resource management system to the web. In that project I handled all the UI/UX development.
+                    I also provided sales support, as well as helping customers implement the product.
+                    <div class="technologies">Technologies: Visual Basic | Java | HTML | JavaScript</div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <div id="education"  style="display:none" class="content">
-            <h1> <i class="fa fa-graduation-cap"></i> Education</h1>
-            <div class="underline"></div>
-            <table>
-                <tr>
-                    <td>University Of Utah</td>
-                    <td>Masters, Business Administration</td>
-                    <td>1996</td>
-                </tr>
-                <tr>
-                    <td>Westminster College</td>
-                    <td>Bachelors, Finance</td>
-                    <td>1994</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Java 2 Certification</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+    <div id="education" style="display:none" class="content">
+        <h1> <i class="fa fa-graduation-cap"></i> Education</h1>
+        <div class="underline"></div>
+        <table>
+            <tr>
+                <td>University Of Utah</td>
+                <td>Masters, Business Administration</td>
+                <td>1996</td>
+            </tr>
+            <tr>
+                <td>Westminster College</td>
+                <td>Bachelors, Finance</td>
+                <td>1994</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Java 2 Certification</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 
-        </div>
+    <div id="references" style="display:none" class="content">
+        <h1> <i class="fa fa-phone-square"></i> References</h1>
+        <div class="underline"></div>
+        <table>
+            <tr>
+                <td>
+                    <span class="ref_name">Justin Julander</span>
+                    <div class="ref_contact">385 303-2761 | jjulander@le.utah.gov</div>
+                </td>
+                <td>Utah Legislature</td>
+                <td>Sr Software Engineer</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ref_desc">
+                    I worked with Justin for several years at DTS, and then hired him into the
+                    legislature's software development team. The last two and half years I was
+                    his manager.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="ref_name">John Byers</span>
+                    <div class="ref_contact">208 241-7402 | jbyers@le.utah.gov</div>
+                </td>
+                <td>Utah Legislature</td>
+                <td>Sr Software Engineer</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ref_desc">
+                    John and I worked together for approximately 6 years at the legislature. I
+                    mentored him in Spring and React development. In the last two and half
+                    years I was his manager.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="ref_name">Crystal Hernandez</span>
+                    <div class="ref_contact">530 591-9485 | Crystldez@gmail.com</div>
+                </td>
+                <td>Utah Legislature</td>
+                <td>IT Portfolio Manager</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="ref_desc">
+                    Crystal and I worked together for approximately 3 years at the legislature, building and reshaping
+                    the development team towards a unified technology stack as well as implementing industry standard
+                    project management tools (jira) and processes (scrum/agile).
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <div id="references"  style="display:none" class="content">
-            <h1> <i class="fa fa-phone-square"></i> References</h1>
-            <div class="underline"></div>
-            <table>
-                <tr>
-                    <td>Justin Julander</td>
-                    <td>Utah Legislature</td>
-                    <td>Sr Software Engineer</td>
-                    <td>385 303-2761 | jjulander@le.utah.gov</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="3">
-                        I worked with Justin for several years at DTS, and then hired him into the
-                        legislature's software development team. The last two and half years I was
-                        his manager.
-                    </td>
-                </tr>
-                <tr>
-                    <td>John Byers</td>
-                    <td>Utah Legislature</td>
-                    <td>Sr Software Engineer</td>
-                    <td>208 241-7402 | jbyers@le.utah.gov</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="3">
-                        John and I worked together for approximately 6 years at the legislature. I
-                        mentored him in Spring and React development. In the last two and half
-                        years I was his manager.
-                    </td>
-                </tr>
-                <tr>
-                    <td>Crystal Hernandez</td>
-                    <td>Utah Legislature</td>
-                    <td>IT Portfolio Manager</td>
-                    <td>530 591-9485 | Crystldez@gmail.com</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="3">
-                        Crystal and I worked together for approximately 3 years at the legislature, building and reshaping
-                         the development team towards a unified technology stack as well as implementing industry standard 
-                         project management tools (jira) and processes (scrum/agile).
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-
-    </div>         
+    <div id="contact" style="display:none" class="content">
+        <h1> <i class="fa fa-phone"></i> Contact</h1>
+        <div class="underline"></div>
+        <ul class="contact">
+            <li><i class="fas fa-home"></i> 860 Shepard Creek Pkwy<br />Farmington, UT 84025</li>
+            <li><i class="fas fa-envelope"></i> <a href="mailto:chadksmith1@gmail.com">Email</a></li>
+            <li><i class="fas fa-phone"></i> 801 230 1081</li>
+            <li><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/chad-smith-64554730/" target="_blank">LinkedIn</a></li>
+            <li><i class="fa-brands fa-github"></i> <a href="https://www.github.com/cksmith01/" target="_blank">GitHub</a></li>
+        </ul>
+    </div>
 
     <script>
-        function showContent(newContent) {
+        const hamMenu = document.querySelector(".ham-menu");
+        const offScreenMenu = document.querySelector(".off-screen-menu");
+
+        function toggleMenu() {
+            hamMenu.classList.toggle("active");
+            offScreenMenu.classList.toggle("active");
+        }
+
+        hamMenu.addEventListener("click", toggleMenu);
+
+        function swap(newContent, doToggle) {
+            if (doToggle == undefined) {
+                doToggle = true;
+            }
             if (newContent != null) {
                 document.getElementById("content").innerHTML = document.getElementById(newContent).innerHTML
             }
+            if (doToggle)
+                toggleMenu();
         }
 
         window.onload = function () {
             setTimeout(() => {
-                console.log('calling....');
-                showContent('intro');
+                document.getElementById("content").innerHTML = document.getElementById('intro').innerHTML
             }, 3000)
-            
+
         };
     </script>
-
 </body>
 
 </html>
